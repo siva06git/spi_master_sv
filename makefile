@@ -13,8 +13,8 @@ OUT_DIR = output
 # Testbench name (must be provided)
 TOP ?= piso_tb
 
-# Automatically include every .sv file except testbenches
-RTL := $(filter-out $(TB_DIR)/%.sv,$(wildcard *.sv))
+# Automatically include every .sv file inside rtl/
+RTL := $(wildcard rtl/*.sv)
 TB  := $(TB_DIR)/$(TOP).sv
 
 OUT = $(OUT_DIR)/$(TOP)
