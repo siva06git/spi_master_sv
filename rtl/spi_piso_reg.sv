@@ -28,7 +28,6 @@ module spi_piso_reg #(
         else begin 
             if(piso_load) begin 
                 piso_reg <= data_in;
-                data_out <= msb ? data_in[WIDTH-1] : data_in[0];
                 piso_busy <= 1;
             end
             else if(word_done) begin 

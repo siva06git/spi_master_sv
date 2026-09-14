@@ -13,11 +13,12 @@ module spi_clk_divider #(
 );
 
     logic [WIDTH-1:0] count_reg;
+    logic sclk_pulse;
+    logic sclk_d;
 
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             sclk      <= cpol;
-            sclk_en   <= 1'b0;
             count_reg <= '0;
         end else begin
             if (clk_div_en) begin
@@ -34,15 +35,23 @@ module spi_clk_divider #(
                 end else begin
                     sclk <= ~cpol;
                 end
-
-                // Generate sclk_en pulse
-                sclk_en <= (count_reg == (count/2) - 1);
             end else begin
                 sclk      <= cpol;
-                sclk_en   <= 1'b0;
                 count_reg <= '0;
             end
         end
     end
+
+assign sclk_1 = sclk;
+
+always_ff@(posedge clk) begin 
+    if(!rst_n) begin 
+        sclk_d <= 0;
+        sclk_en <= 0;
+    end
+    sclk_en  <= sclk & ~sclk_d;
+    sclk_d <= sclk; 
+end
+    
 
 endmodule

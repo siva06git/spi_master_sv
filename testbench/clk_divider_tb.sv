@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 
 module clk_divider_tb;
-
+    
     parameter WIDTH = 8;
 
     logic clk;
@@ -12,10 +12,9 @@ module clk_divider_tb;
     logic sclk;
     logic sclk_en;
 
-    // Instantiate UUT
     spi_clk_divider #(
         .WIDTH(WIDTH)
-    ) uut (
+    ) dut (
         .clk(clk),
         .rst_n(rst_n),
         .count(count),
@@ -28,8 +27,6 @@ module clk_divider_tb;
     // Clock Generator (100 MHz -> 10ns period)
     always #5 clk = ~clk;
 
-    // Helper task to measure clock properties
-    // Measures the period of sclk, its high time, low time, and number of sclk_en pulses
     task verify_divider(
         input int expected_div,
         input logic expected_cpol
@@ -41,8 +38,6 @@ module clk_divider_tb;
         int sclk_en_count;
 
         begin
-            $display("--- Verifying Divider count=%0d, CPOL=%b ---", expected_div, expected_cpol);
-            
             // Wait for clk_div_en to be active and align with clk edge
             @(posedge clk);
             
@@ -148,7 +143,7 @@ module clk_divider_tb;
         $dumpfile("output/clk_divider_tb.vcd");
         $dumpvars(0, clk_divider_tb);
         $monitor("t=%0d | clk=%b | clk_div_en=%b | count=%d | count_reg=%d | sclk=%b | sclk_en=%b", 
-                 $time, clk, clk_div_en, count, uut.count_reg, sclk, sclk_en);
+                 $time, clk, clk_div_en, count, dut.count_reg, sclk, sclk_en);
     end
 
 endmodule

@@ -11,7 +11,7 @@ TB_DIR  = testbench
 OUT_DIR = output
 
 # Testbench name (must be provided)
-TOP ?= piso_tb
+TOP ?= clk_divider_tb
 
 # Automatically include every .sv file inside rtl/
 RTL := $(wildcard rtl/*.sv)
