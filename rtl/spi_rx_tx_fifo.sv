@@ -1,4 +1,5 @@
-module spi_rx_tx_fifo #(
+`timescale 1ps/1ps
+ module spi_rx_tx_fifo #(
     parameter FIFO_WIDTH = 8,
     parameter FIFO_DEPTH = 8
 )(

@@ -1,35 +1,24 @@
-# ==========================================================
-# Generic Makefile for SystemVerilog + Icarus Verilog
-# Usage:
-#   make TOP=piso_tb
-#   make TOP=sipo_tb wave
-#   make TOP=spi_top_tb run
-#   make clean
-# ==========================================================
+TOP = spi_registers_tb
 
-TB_DIR  = testbench
-OUT_DIR = output
+RTL = $(wildcard rtl/*.sv)
+TB  = testbench/spi_registers_tb.sv
 
-# Testbench name (must be provided)
-TOP ?= clk_divider_tb
+VERILATOR = verilator
 
-# Automatically include every .sv file inside rtl/
-RTL := $(wildcard rtl/*.sv)
-TB  := $(TB_DIR)/$(TOP).sv
-
-OUT = $(OUT_DIR)/$(TOP)
+FLAGS = --binary --timing --trace --Wall
 
 all: run
 
-compile:
-	mkdir -p $(OUT_DIR)
-	iverilog -g2012 -o $(OUT).out $(RTL) $(TB)
+build:
+	mkdir -p output
+	$(VERILATOR) $(FLAGS) $(RTL) $(TB) --top-module $(TOP)
 
-run: compile
-	vvp $(OUT).out
+run: build
+	./obj_dir/V$(TOP)
 
 wave: run
-	gtkwave $(OUT).vcd
+	gtkwave output/spi_registers.vcd
 
 clean:
-	rm -f $(OUT_DIR)/*.out $(OUT_DIR)/*.vcd
+	rm -rf obj_dir
+	rm -f output/*.vcd

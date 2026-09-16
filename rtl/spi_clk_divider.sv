@@ -1,3 +1,4 @@
+`timescale 1ps/1ps
 module spi_clk_divider #(
     parameter WIDTH = 8
 )(

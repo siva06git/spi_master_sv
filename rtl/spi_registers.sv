@@ -1,11 +1,11 @@
+`timescale 1ps/1ps
 module spi_registers #(
-    parameter WIDTH = 8,
-    parameter SIZE = 16
+    parameter WIDTH = 8
 )(  
     input logic clk,
     input logic rst_n,  
 
-    input logic [2*SIZE-1:0] data,
+    input logic [4*WIDTH-1:0] data,
     
     output logic msb,
     output logic cpol,
@@ -13,6 +13,7 @@ module spi_registers #(
     output logic [WIDTH-1:0] bits,
     output logic [WIDTH-1:0] div_value
 );
+logic [12:0] unused;
     always_ff @(posedge clk or negedge rst_n) begin
         if(!rst_n)begin 
             cpol <= 0;
@@ -23,6 +24,7 @@ module spi_registers #(
         msb <= data[2];
         bits <= data[10:3];
         div_value <= data[18:11];
+        unused <= data[31:19];
         
     end
 

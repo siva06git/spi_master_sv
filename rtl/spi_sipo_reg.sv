@@ -1,3 +1,4 @@
+`timescale 1ps/1ps
 module spi_sipo_reg #(
     parameter WIDTH = 8
 )(

@@ -1,3 +1,4 @@
+`timescale 1ps/1ps
 module spi_interrupts#(
     parameter IR_SIZE = 8
 ) (

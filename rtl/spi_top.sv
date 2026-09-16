@@ -1,3 +1,4 @@
+`timescale 1ps/1ps
 module spi_top #(
     parameter WIDTH = 8,
     parameter SIZE = 16,
@@ -72,7 +73,6 @@ module spi_top #(
     // Module Instantiations
     spi_registers #(
         .WIDTH(WIDTH),
-        .SIZE(SIZE)
     ) regs_inst (
         .clk(clk),
         .rst_n(rst_n),
@@ -176,10 +176,10 @@ module spi_top #(
         .sipo_shift(sipo_shift),
         .tx_fifo_empty(tx_fifo_empty),
         .tx_fifo_read(tx_fifo_read),
-        .tx_fifo_write(),
+        .tx_fifo_write(tx_fifo_write),
         .tx_fifo_done(tx_fifo_done),
         .rx_fifo_full(rx_fifo_full),
-        .rx_fifo_read(),
+        .rx_fifo_read(rx_fifo_read),
         .rx_fifo_write(rx_fifo_write),
         .rx_fifo_done(rx_fifo_done),
         .word_done(word_done),
